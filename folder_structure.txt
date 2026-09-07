@@ -1,0 +1,30 @@
+SIH/
+│
+├── manim/                          # Manim core & generation
+│   ├── venv/                       # Virtual environment for Manim
+│   ├── manim_generator.py          # Single file containing scene & path logic (formerly manimVid.py)
+│   ├── disturbances.py             # Optional post-processing / noise logic
+│   └── outputs/                    # Default folder where Manim exports rendered MP4 files
+│
+└── streamlit/                      # Streamlit Web Application
+    ├── venv/                       # (Optional) Separate web app environment
+    ├── app.py                      # Main Streamlit dashboard entry point
+    │
+    ├── pages/                      # Multi-page layout (Streamlit native routing)
+    │   ├── 1_Generate.py           # Page to trigger Manim renders
+    │   ├── 2_Upload.py             # Page to upload external videos
+    │   └── 3_Results.py            # Page to analyze tracking & view outputs
+    │
+    ├── vision/                     # Computer Vision module
+    │   ├── detector.py             # Target detection (OpenCV / AI models)
+    │   └── preprocessing.py        # Frame filters & enhancements
+    │
+    ├── tracking/                   # Object Tracking module
+    │   ├── kalman_tracker.py       # Position estimation & prediction
+    │   └── trajectory_tracker.py   # Path analysis
+    │
+    ├── metrics/                    # Evaluation module
+    │   ├── error.py                # Tracking accuracy & pixel drift calculations
+    │   └── performance.py          # Frame rates & processing time
+    │
+    └── requirements.txt            # Streamlit app dependencies
