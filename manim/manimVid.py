@@ -50,8 +50,8 @@ class beacon_generator (Scene) :
 
         path = ParametricFunction(
             lambda t: np.array([
-                3 * np.sin(t),
-                4 * np.sin(t) * np.cos(t),
+                a * np.sin(t),
+                b * np.sin(t) * np.cos(t),
                 0
             ]),
             t_range=[0, TAU],

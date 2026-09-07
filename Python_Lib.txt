@@ -1,0 +1,6 @@
+1. OpenCV
+2. Numpy
+3. Scipy
+4. Matplotlib
+5. manim
+6. streamlit
