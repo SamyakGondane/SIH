@@ -92,7 +92,7 @@ class beacon_generator (Scene) :
 
         #self.play(FadeIn(beacon, scale=0.5))
 
-        get_path = rng.integers(low=0, high=2)
+        get_path = rng.integers(low=0, high=3)
 
         if (get_path == 0) :
             self.sqr_path(beacon)
