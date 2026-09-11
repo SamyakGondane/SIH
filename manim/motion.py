@@ -1,65 +1,80 @@
 import numpy as np
-from manim import *
-
-rng = np.random.default_rng()
 
 
-def square_path():
+WIDTH = 2000
+HEIGHT = 2000
 
-    length = rng.uniform(1, 5)
-    speed = rng.uniform(1, 3)
+TOTAL_TIME = 20
 
-    path = Square(side_length=length)
-
-    return path, speed
+DT = 0.01
 
 
-def circle_path():
+MIN_SPEED = 50
+MAX_SPEED = 1000
 
-    radius = rng.uniform(1, 5)
-    speed = rng.uniform(1, 3)
-
-    path = Circle(radius=radius)
-
-    return path, speed
+MAX_DIRECTION_CHANGE = np.pi / 10
 
 
-def figure8_path():
+def generate_trajectory():
 
-    length_x = rng.uniform(2, 5)
-    length_y = rng.uniform(1, 4)
+    n = int(TOTAL_TIME / DT)
 
-    speed = rng.uniform(1, 3)
+    x = np.zeros(n)
+    y = np.zeros(n)
 
-    path = ParametricFunction(
-        lambda t: np.array([
-            length_x * np.sin(t),
-            length_y * np.sin(t) * np.cos(t),
-            0
-        ]),
-        t_range=[0, TAU]
-    )
-
-    return path, speed
+    speed = np.zeros(n)
 
 
-def straight_path():
-
-    start_x = rng.uniform(-5,5)
-    start_y = rng.uniform(-5,5)
-
-    end_x = rng.uniform(-5,5)
-    end_y = rng.uniform(-5,5)
-
-    speed = rng.uniform(1, 3)
-
-    path = Line(
-        start=np.array([start_x, start_y, 0]),
-        end=np.array([end_x, end_y, 0])
-    )
-
-    return path, speed
+    x[0] = np.random.uniform(0, WIDTH)
+    y[0] = np.random.uniform(0, HEIGHT)
 
 
-def random_path():
-    pass
+    speed[0] = np.random.uniform(MIN_SPEED, MAX_SPEED)
+
+
+    theta = np.random.uniform(0, 2 * np.pi)
+
+
+    for i in range(1, n):
+
+        # Randomly change direction
+        theta += np.random.uniform(
+            -MAX_DIRECTION_CHANGE,
+            MAX_DIRECTION_CHANGE
+        )
+
+        speed[i] = np.random.uniform(
+            MIN_SPEED,
+            MAX_SPEED
+        )
+
+        vx = speed[i] * np.cos(theta)
+        vy = speed[i] * np.sin(theta)
+
+        new_x = x[i - 1] + vx * DT
+        new_y = y[i - 1] + vy * DT
+
+
+        if new_x < 0 or new_x > WIDTH:
+
+            vx = -vx
+            theta = np.pi - theta
+
+            new_x = x[i - 1] + vx * DT
+
+
+        if new_y < 0 or new_y > HEIGHT:
+
+            vy = -vy
+            theta = -theta
+
+            new_y = y[i - 1] + vy * DT
+
+        new_x = np.clip(new_x, 0, WIDTH)
+        new_y = np.clip(new_y, 0, HEIGHT)
+
+        # Store position
+        x[i] = new_x
+        y[i] = new_y
+
+    return x, y, speed

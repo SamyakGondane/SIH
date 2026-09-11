@@ -1,49 +1,62 @@
-import random
+import numpy as np
 from manim import *
 
 from beacon import create_beacon
 from motion import (
-    square_path,
-    circle_path,
-    figure8_path,
-    straight_path,
-    random_path
+    generate_trajectory,
+    WIDTH,
+    HEIGHT,
+    TOTAL_TIME,
+    DT
 )
+
+
+config.frame_rate = 30
 
 
 class BeaconGenerator(Scene):
 
     def construct(self):
 
+        x, y, speed = generate_trajectory()
+
         beacon = create_beacon()
         self.add(beacon)
 
-        paths = [
-            straight_path,
-            square_path,
-            circle_path,
-            figure8_path,
-            random_path
-        ]
 
-        selected_path = random.choice(paths)
-        # selected_path = figure8_path
-        # selected_path = square_path
-        # selected_path = circle_path
-        selected_path = straight_path
+        def pixel_to_manim(px, py):
 
-        path, speed = selected_path()
+            return np.array([
+                (px / WIDTH) * config.frame_width
+                - config.frame_width / 2,
 
-        beacon.move_to(path.get_start())
+                (py / HEIGHT) * config.frame_height
+                - config.frame_height / 2,
 
-        t = 5
-        while(t > 0):
-            self.play(
-                MoveAlongPath(
-                    beacon,
-                    path
-                ),
-                run_time=speed,
-                rate_func=linear
+                0
+            ])
+
+        beacon.move_to(
+            pixel_to_manim(x[0], y[0])
+        )
+
+        points = []
+
+        for i in range(len(x)):
+
+            points.append(
+                pixel_to_manim(x[i], y[i])
             )
-            t = t - 1
+
+        trajectory = VMobject()
+
+        trajectory.set_points_as_corners(points)
+
+        self.play(
+            MoveAlongPath(
+                beacon,
+                trajectory
+            ),
+            run_time=TOTAL_TIME,
+            rate_func=linear
+        )
