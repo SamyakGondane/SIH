@@ -1,0 +1,6 @@
+# This file is used internally by FFMPEG.
+file 'file:/home/samyak/Downloads/SIH/manim/media/videos/main/2000p60/partial_movie_files/BeaconGenerator/367383861_1621553093_2023860264.mp4'
+file 'file:/home/samyak/Downloads/SIH/manim/media/videos/main/2000p60/partial_movie_files/BeaconGenerator/2862434220_3536761610_2023860264.mp4'
+file 'file:/home/samyak/Downloads/SIH/manim/media/videos/main/2000p60/partial_movie_files/BeaconGenerator/2862434220_4272133116_2023860264.mp4'
+file 'file:/home/samyak/Downloads/SIH/manim/media/videos/main/2000p60/partial_movie_files/BeaconGenerator/2862434220_4173952255_2023860264.mp4'
+file 'file:/home/samyak/Downloads/SIH/manim/media/videos/main/2000p60/partial_movie_files/BeaconGenerator/2862434220_1432465762_2023860264.mp4'
